@@ -6,6 +6,11 @@ const taskRouter = require('./routers/task')
 const app = express()
 const port = process.env.PORT || 3000
 
+// app.use((req, res, next) => {
+//     console.log(req.method, req.path)
+//     next()
+// })
+
 app.use(express.json())
 app.use(userRouter)
 app.use(taskRouter)
@@ -13,17 +18,13 @@ app.use(taskRouter)
 app.listen(port, () => {
     console.log('Server is up on port' + port)
 })
-const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
-const hashFunction = async () => {
-    const password = 'Miamiheat2440@@'
-    const hashedPassword = await bcrypt.hash(password, 8)
+const myFunction = async () => {
+    const token = jwt.sign({ _id: 'abc123' }, 'thisismynewtoken', { expiresIn: '7 days'})
+    console.log(token)
 
-    console.log(password)
-    console.log(hashedPassword)
-
-    const isMatch = await bcrypt.compare('Miamiheat2440@@', hashedPassword)
-    console.log(isMatch)
+    const isVerify = jwt.verify(token, 'thisismynewtoken')
+    console.log(isVerify)
 }
-
-hashFunction()
+myFunction()
