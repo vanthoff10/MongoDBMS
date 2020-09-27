@@ -15,6 +15,7 @@ router.post('/tasks', async (req, res) => {
 
 })
 
+//Get request
 router.get('/tasks', async (req, res) => {
 
     try {
